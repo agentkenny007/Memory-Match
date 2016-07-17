@@ -1,0 +1,124 @@
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -khtml-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin box-shadow($shadow) {
+    -webkit-box-shadow: $shadow;
+    -moz-box-shadow: $shadow;
+    -ms-box-shadow: $shadow;
+    box-shadow: $shadow;
+}
+
+@mixin transition($transition) {
+    -webkit-transition: $transition;
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    transition: $transition;
+}
+
+@mixin transition-delay($delay) {
+    -webkit-transition-delay: $delay;
+    -moz-transition-delay: $delay;
+    -o-transition-delay: $delay;
+    transition-delay: $delay;
+}
+
+@mixin transform($transformation) {
+    -webkit-transform: $transformation;
+    -moz-transform: $transformation;
+    -o-transform: $transformation;
+    -ms-transform: $transformation;
+    transform: $transformation;
+}
+html, body {
+    position: relative;
+    height: 100%;
+}
+* {
+    box-sizing: border-box;
+}
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.container {
+    height: 100%;
+    padding: 20px;
+}
+
+.game-grid {
+    width: 495px;
+    margin: auto;
+    overflow: auto;
+    ul {
+        height: 100%;
+        li {
+            position: relative;
+            float: left;
+            padding: 10px;
+            img {
+                display: block;
+                width: 100%;
+                opacity: 0;
+            }
+            span {
+                position: absolute;
+                left: 10px;
+                right: 10px;
+                top: 10px;
+                bottom: 10px;
+                text-align: center;
+                font-size: 800%;
+            }
+            .cover {
+                cursor: pointer;
+                background: gold;
+                border: 5px solid darken(gold, 10%);
+                @include transition(all 0.4s ease-out);
+                @include transition-delay(0.4s);
+                @include border-radius(10px);
+                @include box-shadow(0 4px 7px rgba(0, 0, 0, 0.5));
+            }
+            .content {
+                text-shadow: 0 4px 7px black;
+                @include transition(all 0.4s ease-in);
+                @include transform(rotateX(-90deg));
+            }
+            &.free {
+                .cover {
+                    display: none;
+                }
+                .content {
+                    background: url(../images/free.png) center/100% no-repeat;
+                    @include transform(rotateX(0) !important);
+                }
+            }
+            &:hover {
+                .cover {
+                    @include transform(rotateX(90deg));
+                    @include transition(all 0.4s ease-in);
+                    @include transition-delay(0s);
+                }
+                .content {
+                    @include transform(rotateX(0deg));
+                    @include transition(all 0.4s ease-out);
+                    @include transition-delay(0.4s);
+                }
+            }
+        }
+    }
+    &.easy {
+        li {
+            width: 33.333%;
+            //height: 33.333%;
+            &:nth-child(3n + 1) {
+                clear: left;
+            }
+        }
+    }
+}
