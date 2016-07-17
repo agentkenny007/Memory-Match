@@ -25,10 +25,9 @@ class Game {
             '\u1F327', '\u1F5FF', '\u1F4CD', '\u2728', '\u2B50'
         ];
         */
-        game.matches = game.createCards(_.sampleSize(game.emoji, 4));
-        game.grid = _.shuffle(game.matches.concat(game.matches));
-        game.mode = 'easy';
         game.chosen = null;
+        game.setMode('easy');
+        console.log(game.grid, game.grid.length);
     }
     setMode(mode){
         let game = this;
@@ -50,7 +49,11 @@ class Game {
                 game.grid = game.matches = game.createCards(_.sampleSize(game.emoji, 32));
                 break;
         }
-        game.grid = _.shuffle(game.matches.concat(game.grid));
+        game.grid = _.shuffle(game.matches.concat(game.grid)).map((card)=>{ return new Card(card.id, card.emoji); });
+        game.grid.forEach((card, index)=>{ card.index = index; });
+    }
+    choose(Card){
+        this.chosen = Card;
     }
     createCards(emoji){
         return emoji.map((e, i)=>{ return new Card(i, e); });
