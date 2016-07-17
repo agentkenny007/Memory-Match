@@ -12,12 +12,24 @@ const   GRID = $('.game-grid ul'),
 
 let game = new EmojiMatch();
 
-game.grid.forEach((card, index)=>{
-    let c = CARD.clone();
-    c.data("card", card).find('.content').text(card.emoji);
-    GRID.append(c);
-    if (index === 3) GRID.append(CARD.clone().addClass('granted free'));
-});
+let setupGrid = mode => {
+    game.setMode(mode);
+    game.grid.forEach((card, index)=>{
+        let c = CARD.clone();
+        c.data("card", card).find('.content').text(card.emoji);
+        GRID.append(c);
+        if ((mode === 'easy' && index === 3) || (mode === 'hard' && index === 11))
+            GRID.append(CARD.clone().addClass('granted free'));
+    });
+    $('.game-grid').removeClass().addClass(`game-grid ${mode}`);
+    if ($('.splash').hasClass('visible')){
+        $('.splash').animate({ "left" : '-100%' }, 1200, 'swing', function(){
+            $(this).removeClass('visible').hide();
+        });
+        $('body').animate({ scrollTop : 0 }, 1200, 'swing');
+        $('.game-screen').addClass('visible');
+    }
+};
 
 $(document)
     .delegate('.game-grid .card', 'click', function(){
@@ -27,6 +39,11 @@ $(document)
         }
         $(this).addClass('chosen');
         game.choose($(this).data('card')); })
+    .delegate('.game-mode .easy .play', 'click', function(){ setupGrid('easy'); })
+    .delegate('.game-mode .medium .play', 'click', function(){ setupGrid('medium'); })
+    .delegate('.game-mode .hard .play', 'click', function(){ setupGrid('hard'); })
+    .delegate('.game-mode .crzy .play', 'click', function(){ setupGrid('crazy'); })
+    .delegate('.game-mode .insane .play', 'click', function(){ setupGrid('insane'); })
     .delegate('.game-start img', 'click', function(){
         $('.splash').animate({ "top" : '100%' }, 1200, 'swing');
         $('body').animate({ scrollTop : 0 }, 1200, 'swing');
