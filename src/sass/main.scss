@@ -45,6 +45,10 @@
 html, body {
     position: relative;
     height: 100%;
+    @include user-select(none);
+}
+body {
+    background: url(../images/horror.gif) center/auto 100%;
 }
 * {
     box-sizing: border-box;
@@ -130,11 +134,59 @@ ul {
     &.easy {
         li {
             width: 33.333%;
-            //height: 33.333%;
             &:nth-child(3n + 1) {
                 clear: left;
             }
         }
+    }
+    &.medium {
+        li {
+            width: 25%;
+            &:nth-child(4n + 1) {
+                clear: left;
+            }
+        }
+    }
+    &.hard {
+        li {
+            width: 20%;
+            &:nth-child(5n + 1) {
+                clear: left;
+            }
+        }
+    }
+    &.crazy {
+        li {
+            width: 16%;
+            &:nth-child(6n + 1) {
+                clear: left;
+            }
+        }
+    }
+    &.insane {
+        li {
+            width: 12%;
+            &:nth-child(8n + 1) {
+                clear: left;
+            }
+        }
+    }
+}
+
+.game-screen {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 20px;
+    bottom: 20px;
+    background: white;
+    background: rgba(255, 255, 255, .98);
+    box-shadow: 0 0 5px;
+    border: 1px solid gold;
+    opacity: 0;
+    @include transition(opacity 2s ease-out);
+    &.visible {
+        opacity: 1;
     }
 }
 
@@ -173,10 +225,13 @@ ul {
         overflow: scroll;
         @include box-shadow(0 0 40px);
         h2 {
+            position: relative;
+            cursor: default;
             margin: 0;
-            height: 20%;
             line-height: 2em;
             font-size: 60px;
+            color: #16adec;
+            text-shadow: 0 1px 2px black;
         }
         ul {
             width: 222%;
@@ -193,11 +248,16 @@ ul {
                     @include border-radius(20px);
                     @include box-shadow(0 6px 20px -6px);
                     h3 {
+                        cursor: default;
                         margin: 0;
                         padding-top: 40px;
                         font-size: 40px;
+                        color: yellow;
+                        text-shadow: 0 1px 1px black;
+                        @include transition(color 0.175s ease);
                     }
                     .emoji {
+                        cursor: default;
                         font-size: 1000%;
                         text-shadow: 0 -1px 4px black, 0 3px 6px white, 0 0 75px yellow;
                     }
@@ -217,7 +277,41 @@ ul {
                             @include transform(translate(40px));
                         }
                     }
+                    &:hover {
+                        h3 {
+                            color: #fff;
+                        }
+                    }
                 }
+            }
+        }
+        .banner {
+            position: absolute;
+            width: 222%;
+            height: 10px;
+            &.top {
+                top: 2px;
+                background: rgba(255,255,255,1);
+                background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,204,1) 20%, rgba(255,255,0,0) 100%);
+                background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,1)), color-stop(20%, rgba(255,255,204,1)), color-stop(100%, rgba(255,255,0,0)));
+                background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,204,1) 20%, rgba(255,255,0,0) 100%);
+                background: -o-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,204,1) 20%, rgba(255,255,0,0) 100%);
+                background: -ms-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(255,255,204,1) 20%, rgba(255,255,0,0) 100%);
+                background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,204,1) 20%, rgba(255,255,0,0) 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffff00', GradientType=1 );
+                border-top: 1px solid white;
+            }
+            &.bottom {
+                bottom: 2px;
+                background: rgba(255,255,0,0);
+                background: -moz-linear-gradient(left, rgba(255,255,0,0) 0%, rgba(255,255,204,1) 80%, rgba(255,255,255,1) 100%);
+                background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,0,0)), color-stop(80%, rgba(255,255,204,1)), color-stop(100%, rgba(255,255,255,1)));
+                background: -webkit-linear-gradient(left, rgba(255,255,0,0) 0%, rgba(255,255,204,1) 80%, rgba(255,255,255,1) 100%);
+                background: -o-linear-gradient(left, rgba(255,255,0,0) 0%, rgba(255,255,204,1) 80%, rgba(255,255,255,1) 100%);
+                background: -ms-linear-gradient(left, rgba(255,255,0,0) 0%, rgba(255,255,204,1) 80%, rgba(255,255,255,1) 100%);
+                background: linear-gradient(to right, rgba(255,255,0,0) 0%, rgba(255,255,204,1) 80%, rgba(255,255,255,1) 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff00', endColorstr='#ffffff', GradientType=1 );
+                border-bottom: 1px solid white;
             }
         }
     }
