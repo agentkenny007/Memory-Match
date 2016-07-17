@@ -3,22 +3,22 @@ import chai from 'chai';
 
 // Import Any Files to Test
 import Card from '../src/js/classes/card';
-import MemoryMatch from '../src/js/classes/game';
+import EmojiMatch from '../src/js/classes/game';
 
 // Set Chai Constants
 const expect = chai.expect;
 const should = chai.should();
 const assert = chai.assert;
 
-describe('About the game Memory Match', function(){
-    let game;
+describe('Inside the game Emoji Match', function(){
+    let game = new EmojiMatch();
     beforeEach(function(){
-        game = new MemoryMatch();
+        //game = ;
     });
 
-    describe('The creation of a Memory Match game', function(){
-        it('should be an instance of MemoryMatch', ()=>{
-            expect(game).to.be.an.instanceof(MemoryMatch);
+    describe('The creation of an Emoji Match game', function(){
+        it('should be an instance of EmojiMatch', ()=>{
+            expect(game).to.be.an.instanceof(EmojiMatch);
         });
         it('must have multiple modes', ()=>{
             expect(game.mode).to.be.a('string');
@@ -55,14 +55,27 @@ describe('About the game Memory Match', function(){
         });
     });
 
-    describe('The MemoryMatch game grid', function(){
+    describe('the Game Grid', function(){
         it('should have an array of cards', ()=>{
             expect(game.grid).to.be.an('array');
             expect(game.grid[0]).to.be.an.instanceof(Card);
         });
+        describe('\'s card', ()=>{
+            it('should be an instance of Card', ()=>{
+                let card = new Card();
+                expect(card).to.be.an.instanceof(Card);
+            });
+            it('should have a property index set to the card\'s index in the grid', ()=>{
+                expect(game.grid[0].index).to.equal(0);
+            });
+        });
     });
 
-    describe('How to play a MemoryMatch game', function(){
-
+    describe('to start playing', function(){
+        it('you should be able to choose a Card in the grid', ()=>{
+            let card = new Card(0, '', 2);
+            game.choose(card);
+            expect(game.chosen).to.be.an.instanceof(Card);
+        });
     });
 });
