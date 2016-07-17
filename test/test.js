@@ -20,11 +20,35 @@ describe('About the game Memory Match', function(){
             expect(game).to.be.an.instanceof(MemoryMatch);
         });
         it('must have multiple modes', ()=>{
-            expect(game.mode).to.be.an('array');
+            expect(game.mode).to.be.a('string');
             describe('Easy Mode', function(){
                 it('should have a grid of size 3x3 with a free square', ()=>{
                     game.setMode('easy');
                     expect(game.grid.length).to.equal(8);
+                });
+            });
+            describe('Medium Mode', function(){
+                it('should have a grid of size 4x4', ()=>{
+                    game.setMode('medium');
+                    expect(game.grid.length).to.equal(16);
+                });
+            });
+            describe('Hard Mode', function(){
+                it('should have a grid of size 5x5 with a free square', ()=>{
+                    game.setMode('hard');
+                    expect(game.grid.length).to.equal(24);
+                });
+            });
+            describe('Crazy Mode', function(){
+                it('should have a grid of size 6x6', ()=>{
+                    game.setMode('crazy');
+                    expect(game.grid.length).to.equal(36);
+                });
+            });
+            describe('Insane Mode', function(){
+                it('should have a grid of size 8x8', ()=>{
+                    game.setMode('insane');
+                    expect(game.grid.length).to.equal(64);
                 });
             });
         });
