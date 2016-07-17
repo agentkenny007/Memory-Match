@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import Card from './card';
 
 class Game {
     constructor(){
@@ -24,31 +25,35 @@ class Game {
             '\u1F3B1', '\u1F511', '\u1F4A1', '\u1F52E', '\u1F4AF',
             '\u1F327', '\u1F5FF', '\u1F4CD', '\u2728', '\u2B50'
         ];
-        game.grid = [];
-        game.matches = [];
+        game.matches = game.createCards(_.sampleSize(game.emoji, 4));
+        game.grid = _.shuffle(game.matches.concat(game.matches));
         game.mode = 'easy';
+        game.chosen = null;
     }
     setMode(mode){
         let game = this;
         game.mode = mode;
-        switch (mode) {
+        switch (mode){
             case 'easy' :
-                game.grid = game.matches = _.sampleSize(game.emoji, 4);
+                game.grid = game.matches = game.createCards(_.sampleSize(game.emoji, 4));
                 break;
             case 'medium' :
-                game.grid = game.matches = _.sampleSize(game.emoji, 8);
+                game.grid = game.matches = game.createCards(_.sampleSize(game.emoji, 8));
                 break;
             case 'hard' :
-                game.grid = game.matches = _.sampleSize(game.emoji, 12);
+                game.grid = game.matches = game.createCards(_.sampleSize(game.emoji, 12));
                 break;
             case 'crazy' :
-                game.grid = game.matches = _.sampleSize(game.emoji, 18);
+                game.grid = game.matches = game.createCards(_.sampleSize(game.emoji, 18));
                 break;
             case 'insane' :
-                game.grid = game.matches = _.sampleSize(game.emoji, 32);
+                game.grid = game.matches = game.createCards(_.sampleSize(game.emoji, 32));
                 break;
         }
         game.grid = _.shuffle(game.matches.concat(game.grid));
+    }
+    createCards(emoji){
+        return emoji.map((e, i)=>{ return new Card(i, e); });
     }
 }
 
