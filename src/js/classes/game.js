@@ -59,8 +59,13 @@ class Game {
         game.granted.push(Card1, Card2);
         $('.game-grid .card').each(function(index){
             console.log(index);
-            if (game.granted.includes($(this).data('card')) && !$(this).hasClass('granted'))
-                $(this).addClass('granted');
+            if (game.granted.includes($(this).data('card')) && !$(this).hasClass('granted')){
+                let gridCard = $(this);
+                gridCard.addClass('chosen');
+                setTimeout(function () {
+                    gridCard.addClass('granted');
+                }, 1500);
+            }
         });
         if (game.mode === 'easy' && game.granted.length > 4) game.win();
         if (game.mode === 'medium' && game.granted.length > 12) game.win();
