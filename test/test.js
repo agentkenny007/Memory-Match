@@ -2,6 +2,7 @@
 import chai from 'chai';
 
 // Import Any Files to Test
+import Card from '../src/js/classes/card';
 import MemoryMatch from '../src/js/classes/game';
 
 // Set Chai Constants
@@ -52,5 +53,16 @@ describe('About the game Memory Match', function(){
                 });
             });
         });
+    });
+
+    describe('The MemoryMatch game grid', function(){
+        it('should have an array of cards', ()=>{
+            expect(game.grid).to.be.an('array');
+            expect(game.grid[0]).to.be.an.instanceof(Card);
+        });
+    });
+
+    describe('How to play a MemoryMatch game', function(){
+
     });
 });
