@@ -1,9 +1,12 @@
+import $ from 'jquery';
 import _ from 'lodash';
 import Card from './card';
 
 class Game {
     constructor(){
         let game = this;
+        game.chosen = null;
+        game.displayTimeout = null;
         game.emoji = [
         '😎','😍','👊','🔥','🌮',
         '🌭','🦄','🌍','🦁','🤘',
@@ -12,22 +15,9 @@ class Game {
         '💈','😈','😂','💰','💖',
         '💣','🍕','🍋','🏀','🏈',
         '🎱','🔑','💡','🔮','💯',
-        '🌧','🗿','📍','⭐️','✨']
-        /*
-        game.emoji = [
-            '\u1F60E', '\u1F60D', '\u1F44A', '\u1F525', '\u1F32E',
-            '\u1F32D', '\u1F984', '\u1F30D', '\u1F981', '\u1F918',
-            '\u1F649', '\u1F64A', '\u1F44C', '\u1F44D', '\u1F465',
-            '\u1F4B5', '\u1F48E', '\u1F48B', '\u1F3A9', '\u1F451',
-            '\u1F488', '\u1F608', '\u1F602', '\u1F4B0', '\u1F496',
-            '\u1F4A3', '\u1F355', '\u1F34B', '\u1F3C0', '\u1F3C8',
-            '\u1F3B1', '\u1F511', '\u1F4A1', '\u1F52E', '\u1F4AF',
-            '\u1F327', '\u1F5FF', '\u1F4CD', '\u2728', '\u2B50'
-        ];
-        */
-        game.chosen = null;
+        '🌧','🗿','📍','⭐️','✨'];
+        game.granted = [];
         game.setMode('easy');
-        console.log(game.grid, game.grid.length);
     }
     setMode(mode){
         let game = this;
@@ -53,10 +43,46 @@ class Game {
         game.grid.forEach((card, index)=>{ card.index = index; });
     }
     choose(Card){
-        this.chosen = Card;
+        let game = this;
+        if (game.granted.includes(Card)) return;
+        if (game.chosen) game.validate(Card);
+        else game.chosen = Card;
     }
     createCards(emoji){
         return emoji.map((e, i)=>{ return new Card(i, e); });
+    }
+    deduct(){
+
+    }
+    grant(Card1, Card2){
+        let game = this;
+        game.granted.push(Card1, Card2);
+        $('.game-grid .card').each(function(index){
+            console.log(index);
+            if (game.granted.includes($(this).data('card')) && !$(this).hasClass('granted'))
+                $(this).addClass('granted');
+        });
+        if (game.mode === 'easy' && game.granted.length > 4) game.win();
+        if (game.mode === 'medium' && game.granted.length > 12) game.win();
+        if (game.mode === 'hard' && game.granted.length > 20) game.win();
+        if (game.mode === 'crazy' && game.granted.length > 32) game.win();
+        if (game.mode === 'insane' && game.granted.length > 60) game.win();
+    }
+    validate(Card){
+        let game = this;
+        if (Card.index === game.chosen.index) return;
+        if (Card.id === game.chosen.id) game.grant(Card, game.chosen);
+        else game.deduct();
+        game.displayTimeout = setTimeout(function(){
+            $('.chosen').removeClass('chosen');
+        }, 2000);
+        game.chosen = null;
+    }
+    win(){
+        $('.game-grid .card').addClass('chosen');
+        setTimeout(function () {
+            $('.game-grid .card').addClass('granted');
+        }, 1500);
     }
 }
 
