@@ -31,6 +31,12 @@ let setupGrid = mode => {
     }
 };
 
+let shapeGrid = ()=>{
+    $('.game-grid').css("width", $(window).height() - 45);
+};
+
+shapeGrid();
+
 $(document)
     .delegate('.game-grid .card', 'click', function(){
         if ($('.chosen').length > 1){
@@ -42,9 +48,11 @@ $(document)
     .delegate('.game-mode .easy .play', 'click', function(){ setupGrid('easy'); })
     .delegate('.game-mode .medium .play', 'click', function(){ setupGrid('medium'); })
     .delegate('.game-mode .hard .play', 'click', function(){ setupGrid('hard'); })
-    .delegate('.game-mode .crzy .play', 'click', function(){ setupGrid('crazy'); })
+    .delegate('.game-mode .crazy .play', 'click', function(){ setupGrid('crazy'); })
     .delegate('.game-mode .insane .play', 'click', function(){ setupGrid('insane'); })
     .delegate('.game-start img', 'click', function(){
         $('.splash').animate({ "top" : '100%' }, 1200, 'swing');
         $('body').animate({ scrollTop : 0 }, 1200, 'swing');
     });
+
+$(window).resize(shapeGrid);

@@ -68,6 +68,7 @@ ul {
     width: 495px;
     margin: auto;
     overflow: auto;
+    @include transition(all .45s ease);
     ul {
         height: 100%;
         li {
@@ -180,7 +181,7 @@ ul {
     top: 20px;
     bottom: 20px;
     background: white;
-    background: rgba(255, 255, 255, .98);
+    background: rgba(255, 255, 255, .989);
     box-shadow: 0 0 5px;
     border: 1px solid gold;
     opacity: 0;
