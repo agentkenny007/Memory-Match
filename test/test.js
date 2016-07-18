@@ -3,6 +3,7 @@ import chai from 'chai';
 
 // Import Any Files to Test
 import Card from '../src/js/classes/card';
+import Scoreboard from '../src/js/classes/score';
 import EmojiMatch from '../src/js/classes/game';
 
 // Set Chai Constants
@@ -16,7 +17,7 @@ describe('Inside the game Emoji Match', function(){
         //game = ;
     });
 
-    describe('The creation of an Emoji Match game', function(){
+    describe('the creation of an Emoji Match game', function(){
         it('should be an instance of EmojiMatch', ()=>{
             expect(game).to.be.an.instanceof(EmojiMatch);
         });
@@ -68,6 +69,12 @@ describe('Inside the game Emoji Match', function(){
             it('should have a property index set to the card\'s index in the grid', ()=>{
                 expect(game.grid[0].index).to.equal(0);
             });
+        });
+    });
+
+    describe('the Game Scoreboard', function(){
+        it('should be an instance of Scoreboard', ()=>{
+            expect(game.board).to.be.an.instanceof(Scoreboard);
         });
     });
 

@@ -1,10 +1,12 @@
 import $ from 'jquery';
 import _ from 'lodash';
 import Card from './card';
+import GameBoard from './score';
 
 class Game {
     constructor(){
         let game = this;
+        game.board = new GameBoard();
         game.chosen = null;
         game.displayTimeout = null;
         game.emoji = [
