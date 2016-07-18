@@ -54,13 +54,18 @@ class Game {
         return emoji.map((e, i)=>{ return new Card(i, e); });
     }
     deduct(){
-
+        let game = this;
+        game.board.score -= 5;
+        game.board.faulty--;
+        console.log(game.board.score);
     }
     grant(Card1, Card2){
         let game = this;
         game.granted.push(Card1, Card2);
+        game.board.score += 20;
+        game.board.guessed++;
+        console.log(game.board.score);
         $('.game-grid .card').each(function(index){
-            console.log(index);
             if (game.granted.includes($(this).data('card')) && !$(this).hasClass('granted')){
                 let gridCard = $(this);
                 gridCard.addClass('chosen');
@@ -78,7 +83,8 @@ class Game {
     validate(Card){
         let game = this;
         if (Card.index === game.chosen.index) return;
-        if (Card.id === game.chosen.id) game.grant(Card, game.chosen);
+        if (Card.id === game.chosen.id)
+            game.grant(Card, game.chosen);
         else game.deduct();
         game.displayTimeout = setTimeout(function(){
             $('.chosen').removeClass('chosen');
@@ -86,10 +92,17 @@ class Game {
         game.chosen = null;
     }
     win(){
+        let game = this;
         $('.game-grid .card').addClass('chosen');
         setTimeout(function () {
             $('.game-grid .card').addClass('granted');
         }, 1500);
+        game.board.played++;
+        if (game.board.faulty < game.grid.length / 2)
+            game.board.bonus = 50;
+        game.board.faulty = game.board.guessed = 0;
+        game.board.score = game.board.score + game.board.bonus;
+        console.log(game.board.score);
     }
 }
 
