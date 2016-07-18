@@ -80,9 +80,24 @@ describe('Inside the game Emoji Match', function(){
 
     describe('to start playing', function(){
         it('you should be able to choose a Card in the grid', ()=>{
-            let card = new Card(0, '', 2);
+            let card = new Card(2, '', 2);
+            expect(game.chosen).to.be.null;
             game.choose(card);
             expect(game.chosen).to.be.an.instanceof(Card);
+        });
+    });
+
+    describe('while playing', function(){
+        it('you should be able to match two of the same cards', ()=>{
+            let game = new EmojiMatch();
+            let cardA = new Card(0, '', 0);
+            let cardB = new Card(0, '', 1);
+            expect(game.granted.length).to.equal(0);
+            expect(game.board.score).to.equal(20);
+            game.choose(cardA);
+            game.choose(cardB);
+            expect(game.granted.length).to.equal(2);
+            expect(game.board.score).to.equal(40);
         });
     });
 });
