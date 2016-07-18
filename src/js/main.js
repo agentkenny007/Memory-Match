@@ -1,6 +1,7 @@
 import $ from 'jquery';
 
 import EmojiMatch from './classes/game';
+import KonamiCode from './classes/cheat';
 
 const   GRID = $('.game-grid ul'),
         CARD = $(`
@@ -11,6 +12,11 @@ const   GRID = $('.game-grid ul'),
             </li>`);
 
 let game = new EmojiMatch();
+let cheatcode = new KonamiCode();
+
+let checkKonami = e => {
+    if (cheatcode.unlocked(e.which)) game.win();
+};
 
 let setupGrid = mode => {
     game.setMode(mode);
@@ -52,7 +58,7 @@ $(document)
     .delegate('.game-mode .insane .play', 'click', function(){ setupGrid('insane'); })
     .delegate('.game-start img', 'click', function(){
         $('.splash').animate({ "top" : '100%' }, 1200, 'swing');
-        $('body').animate({ scrollTop : 0 }, 1200, 'swing');
-    });
+        $('body').animate({ scrollTop : 0 }, 1200, 'swing'); })
+    .on('keyup', checkKonami);
 
 $(window).resize(shapeGrid);
