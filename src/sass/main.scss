@@ -97,6 +97,10 @@ ul {
                 @include transition-delay(0.4s);
                 @include border-radius(10px);
                 @include box-shadow(0 4px 7px rgba(0, 0, 0, 0.5));
+                &:hover {
+                    background: lighten(gold, 25%);
+                    @include transition(background .35s ease);
+                }
             }
             .content {
                 cursor: default;;
